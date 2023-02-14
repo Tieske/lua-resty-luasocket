@@ -1,9 +1,12 @@
 .PHONY: test lint
 
 test:
-		@busted -v -o gtest spec
-		@t/reindex t/*.t
-		@prove
+	@busted -v -o gtest spec
+	@t/reindex t/*.t
+	@prove
 
 lint:
-		@luacheck .
+	@luacheck .
+
+docs:
+	@ldoc .

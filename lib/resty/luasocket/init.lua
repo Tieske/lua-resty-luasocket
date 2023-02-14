@@ -1,7 +1,9 @@
 --- Socket compatibility module to enable the init-phase, by falling back to LuaSocket.
 -- Forked from [lua-resty-socket](https://github.com/thibaultcha/lua-resty-socket).
 --
--- **NOTE**: see comments in the `luasocket.http` module regarding compatibility!!
+-- **NOTE**: see section [Important notes](../topics/manual.md.html#Important_notes) in the manual for limitations.
+-- @copyright (c) 2016-2019 Thibault Charbonnier, 2021-2023 Thijs Schreijer
+-- @license MIT, see `LICENSE.md`.
 
 local type = type
 local luasec_defaults = {

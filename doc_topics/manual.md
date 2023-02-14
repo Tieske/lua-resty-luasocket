@@ -58,13 +58,14 @@ Lua compatibility.
 
 ## Important notes
 
-The use of LuaSocket inside `ngx_lua` is **very strongly** discouraged due to its
-blocking nature. However, it is fine to use it in the `init` context where
-blocking is not considered harmful.
-
-In the future, only the `init` phase will allow falling back to LuaSocket.
-
-It currently only support TCP sockets.
+* LuaSocket sockets do not allow fo re-use. So always create a new socket.
+* The previous comment also applies to the `http` module. Do not reuse http clients.
+* Configuring the LuaSec module to be configured the same as `ngx_lua` is up to the
+  initializer of the module. See `resty.luasocket.get_luasec_defaults` documentation for an example.
+* The use of LuaSocket inside `ngx_lua` is **very strongly** discouraged due to its
+  blocking nature. However, it is fine to use it in the `init` context where
+  blocking is not considered harmful.
+* It currently only support TCP sockets.
 
 
 ## Requirements

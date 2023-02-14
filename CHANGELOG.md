@@ -9,10 +9,10 @@
 - create a new rockspec and update the version inside the new rockspec:<br/>
   `cp lua-resty-luasocket-dev-1.rockspec ./rockspecs/lua-resty-luasocket-X.Y.Z-1.rockspec`
 - test: run `make test` and `make lint`
-- clean and render the docs: run `make clean` and `make docs`
-- commit the changes as `release X.Y.Z`
+- clean and render the docs: run `make docs`
+- commit the changes as `release vX.Y.Z`
 - push the commit, and create a release PR
-- after merging tag the release commit with `X.Y.Z`
+- after merging tag the release commit with `vX.Y.Z`
 - upload to LuaRocks:<br/>
   `luarocks upload ./rockspecs/lua-resty-luasocket-X.Y.Z-1.rockspec --api-key=ABCDEFGH`
 - test the newly created rock:<br/>
@@ -20,12 +20,12 @@
 
 ### Version X.Y.Z, unreleased
 
-- added: `http` module that will use the compatibility sockets
-- fix: added compatibility function `sock:settimeouts` 
-- added: LuaSec defaults are now configurable.
+- added: `resty.luasocket.http` module that will use the compatibility sockets
+- fix: added compatibility function `sock:settimeouts`
+- added: LuaSec defaults are now configurable, see `resty.luasocket.get_luasec_defaults` and `resty.luasocket.set_luasec_defaults`.
 - fix: support `send_status_req` in the sslhandshake signature which was added to `ngx.lua`
 - change: update TLS defaults to exclude deprecated ones; `options = {"all", "no_sslv2", "no_sslv3", "no_tlsv1"}`
-- fix: `ngx_lua` aalows sending a table of strings, if the value was a number, the compatibility
+- fix: `ngx_lua` allows sending a table of strings, if the value was a number, the compatibility
   shim would not properly cast it to a string.
 - fix: allow reuse of sockets. Luasocket doesn't allow reusing the same socket after it was closed.
   This doesn't play nice with resty-http which allows this.

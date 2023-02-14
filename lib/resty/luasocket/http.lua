@@ -5,6 +5,9 @@
 -- **NOTE**: the socket compatibility is not sturdy enough to have the http-client
 -- make multiple requests over the same connection. So after each request create
 -- a new http client and do not re-use it.
+--
+-- **NOTE**: see section [Important notes](../topics/manual.md.html#Important_notes) in the manual for limitations.
+--
 -- @usage
 -- -- usage in the init phase (or other phases were co-sockets are unavailable)
 -- local httpc = require "resty.luasocket.http"
