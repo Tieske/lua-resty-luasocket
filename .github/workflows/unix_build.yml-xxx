@@ -1,0 +1,38 @@
+name: "Unix build"
+
+concurrency:
+  # for PR's cancel the running task, if another commit is pushed
+  group: ${{ github.workflow }} ${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+on:
+  # build on PR and push-to-main. This works for short-lived branches, and saves
+  # CPU cycles on duplicated tests.
+  # For long-lived branches that diverge, you'll want to run on all pushes, not
+  # just on push-to-main.
+  pull_request: {}
+  push:
+    branches:
+    - main
+
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        openresty: ["1.19.9.1"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup OpenResty
+        uses: thibaultcha/setup-openresty@main
+        with:
+          version: ${{ matrix.openresty }}
+
+      - run: make test
+        working-directory: lua-resty-luasocket
