@@ -4,7 +4,7 @@
 
 - create a release branch
 - update the changelog below
-- update version and copyright-years in `./LICENSE.md` and `./lib/resty/luasocket.lua` (in doc-comments
+- update version and copyright-years in `./LICENSE.md` and `./lib/resty/luasocket/init.lua` (in doc-comments
   header, and in module constants)
 - create a new rockspec and update the version inside the new rockspec:<br/>
   `cp lua-resty-luasocket-dev-1.rockspec ./rockspecs/lua-resty-luasocket-X.Y.Z-1.rockspec`
@@ -19,5 +19,17 @@
   `luarocks install lua-resty-luasocket`
 
 ### Version X.Y.Z, unreleased
+
+- added: `http` module that will use the compatibility sockets
+- fix: added compatibility function `sock:settimeouts` 
+- added: LuaSec defaults are now configurable.
+- fix: support `send_status_req` in the sslhandshake signature which was added to `ngx.lua`
+- change: update TLS defaults to exclude deprecated ones; `options = {"all", "no_sslv2", "no_sslv3", "no_tlsv1"}`
+- fix: `ngx_lua` aalows sending a table of strings, if the value was a number, the compatibility
+  shim would not properly cast it to a string.
+- fix: allow reuse of sockets. Luasocket doesn't allow reusing the same socket after it was closed.
+  This doesn't play nice with resty-http which allows this.
+
+### unreleased
 
 - forked from https://github.com/thibaultcha/lua-resty-socket

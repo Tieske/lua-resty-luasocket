@@ -22,7 +22,7 @@ __DATA__
 
         log_by_lua_block {
             ngx.timer.at(0, function()
-                local socket = require 'resty.socket'
+                local socket = require 'resty.luasocket'
                 socket.force_luasocket('timer', true)
 
                 local sock = socket.tcp()
@@ -49,7 +49,7 @@ is fallback: true
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             socket.disable_luasocket('log', true)
 
             socket.tcp()

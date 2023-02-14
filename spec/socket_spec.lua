@@ -1,4 +1,5 @@
-local socket = require 'lib.resty.socket'
+package.path = "?.lua;?/init.lua;" .. package.path
+local socket = require 'lib.resty.luasocket'
 
 describe('resty.socket', function()
   it('fallbacks on LuaSocket outside of ngx_lua', function()

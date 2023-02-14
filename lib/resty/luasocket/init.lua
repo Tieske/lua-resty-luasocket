@@ -1,3 +1,8 @@
+--- Socket compatibility module to enable the init-phase, by falling back to LuaSocket.
+-- Forked from [lua-resty-socket](https://github.com/thibaultcha/lua-resty-socket).
+--
+-- **NOTE**: see comments in the `luasocket.http` module regarding compatibility!!
+
 local type = type
 local luasec_defaults = {
   _fields = { "protocol", "key", "cert", "cafile", "options" }, -- meta-field to list settable fields
@@ -8,9 +13,9 @@ local luasec_defaults = {
   options = { "all", "no_sslv2", "no_sslv3", "no_tlsv1" },
 }
 
-----------------------------
+--==========================
 -- LuaSocket proxy metatable
-----------------------------
+--==========================
 
 local proxy_mt
 
@@ -144,18 +149,18 @@ do
   end
 end
 
----------
+-- ------
 -- Module
----------
+-- ------
 
 local _M = {
   luasocket_mt = proxy_mt,
   _VERSION = '1.0.0'
 }
 
------------------------
+-- --------------------
 -- ngx_lua/plain compat
------------------------
+-- --------------------
 
 local COSOCKET_PHASES = {
   rewrite = true,
@@ -177,6 +182,10 @@ do
     local get_phase = ngx.get_phase
     local ngx_socket = ngx.socket
 
+    --- creates a tcp socket compatible with `ngx.socket.tcp`. The socket will fall back to
+    -- LuaSocket where cosockets are not supported.
+    -- @param ... same as `ngx.socket.tcp`
+    -- @return a co-sockets compatible TCP socket
     function _M.tcp(...)
       local phase = get_phase()
       if not forced_luasocket_phases[phase]
@@ -211,9 +220,9 @@ do
   end
 end
 
----------------------------------------
+-- ------------------------------------
 -- Disabling/forcing LuaSocket fallback
----------------------------------------
+-- ------------------------------------
 
 do
   local function check_phase(phase)
@@ -225,19 +234,43 @@ do
     end
   end
 
+  --- forces LuaSocket use for a specific phase.
+  -- An override for the automatic phase/socket-type detection. This setting is
+  -- a module global setting.
+  -- @tparam string phase the phase name
+  -- @tparam bool force set to `true` to force, or `false/nil` to auto-detect
+  -- @return the previous value of this setting.
+  -- @usage
+  -- local old_setting = sock.force_luasocket("timer", true)
+  -- -- do something
+  -- sock.force_luasocket("timer", old_setting)
   function _M.force_luasocket(phase, force)
     check_phase(phase)
+    local old_setting = forced_luasocket_phases[phase]
     forced_luasocket_phases[phase] = force
+    return old_setting
   end
 
+  --- disables LuaSocket use for a specific phase.
+  -- An override for the automatic phase/socket-type detection. This setting is
+  -- a module global setting.
+  -- @tparam string phase the phase name
+  -- @tparam bool disable set to `true` to disable, or `false/nil` to enable
+  -- @return the previous value of this setting.
+  -- @usage
+  -- local old_setting = sock.disable_luasocket("init", true)
+  -- -- do something
+  -- sock.disable_luasocket("init", old_setting)
   function _M.disable_luasocket(phase, disable)
     check_phase(phase)
+    local old_setting = forbidden_luasocket_phases[phase]
     forbidden_luasocket_phases[phase] = disable
+    return old_setting
   end
 end
 
 
----------------------------------------
+-- -----------------------
 -- Setting LuaSec defaults
 ---------------------------------------
 
@@ -253,8 +286,14 @@ local function deepcopy(t)
 end
 
 --- Sets the luasec defaults for tls connections. See `get_luasec_defaults`.
--- The options will be (deep)copied, so safe to reuse the table.
--- @tparam table defaults The options table with options to set.
+-- The options will be (deep)copied, so safe to reuse the table. These settings
+-- are module global setting.
+-- @tparam table defaults a table with the following fields:
+-- @param defaults.protocol see luasec docs `protocol`
+-- @param defaults.key see luasec docs `key`
+-- @param defaults.cert see luasec docs `certificate`
+-- @param defaults.cafile see luasec docs `cafile`
+-- @param defaults.options see luasec docs `options`
 function _M.set_luasec_defaults(defaults)
   if type(defaults) ~= "table" then
     error(string.format(
@@ -266,9 +305,13 @@ function _M.set_luasec_defaults(defaults)
   end
 end
 
---- Returns a copy of the defaults table. The `_fields` meta field lists the
+--- Returns a copy of the defaults table. The "`_fields`"" meta field lists the
 -- known fields. The options will be (deep)copied, so safe to reuse/modify the table.
 -- @return table with options as currently in use
+-- @usage -- Setting the CAfile, to enable TLS verification.
+-- local config = resty_luasocket.get_luasec_defaults()
+-- config.cafile = "/path/to/my/cafile"
+-- resty_luasocket.set_luasec_defaults(config)
 function _M.get_luasec_defaults()
   local defaults = {}
   for _, fieldname in ipairs(luasec_defaults._fields) do

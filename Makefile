@@ -6,4 +6,4 @@ test:
 		@prove
 
 lint:
-		@luacheck lib --std ngx_lua --no-redefined
+		@luacheck .

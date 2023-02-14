@@ -22,7 +22,7 @@ __DATA__
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             local sock = socket.tcp()
 
             local ok, err = sock:connect('www.google.com', 80)
@@ -69,7 +69,7 @@ HTTP/1.1 200 OK
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             local sock = socket.tcp()
             local reused_times = sock:getreusedtimes()
             print("reused: ", reused_times)
@@ -100,7 +100,7 @@ reused: 0
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             local sock = socket.tcp()
             sock:settimeout(1000) -- should be translated to 1 for LuaSocket
             local ok, err = sock:connect('localhost', $TEST_NGINX_SERVER_PORT)
@@ -141,7 +141,7 @@ could not receive: timeout
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             local sock = socket.tcp()
             sock:settimeout() -- no errors
             ngx.log(ngx.INFO, 'ok')
@@ -165,7 +165,7 @@ ok
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             local sock = socket.tcp()
             local ok, err = sock:connect('www.google.com', 80)
             if not ok then
@@ -215,7 +215,7 @@ could not send after keepalive: closed
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             local sock = socket.tcp()
             local ok, err = sock:connect('www.google.com', 443)
             if not ok then
@@ -267,7 +267,7 @@ GET /t
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             local sock = socket.tcp()
             local ok, err = sock:connect('www.google.com', 443)
             if not ok then
@@ -302,7 +302,7 @@ qr/\[notice\] .*? session: boolean/
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             local sock = socket.tcp()
             local ok, err = sock:connect('www.google.com', 443)
             if not ok then
@@ -339,7 +339,7 @@ qr/\[notice\] .*? ok: 1 err: nil/
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             local sock = socket.tcp()
             local ok, err = sock:connect('www.google.com', 443)
             if not ok then

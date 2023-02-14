@@ -22,7 +22,7 @@ __DATA__
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             local sock = socket.tcp()
 
             local ok, err = sock:connect('www.google.com', 443)

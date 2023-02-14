@@ -2,7 +2,7 @@
 use Test::Nginx::Socket::Lua;
 
 our $HttpConfig = <<_EOC_;
-    lua_package_path 'lib/?.lua;;';
+    lua_package_path 'lib/?.lua;lib/?/init.lua;;';
 _EOC_
 
 plan tests => repeat_each() * (blocks() * 3 + 1);
@@ -18,7 +18,7 @@ __DATA__
 --- config
     location /t {
         content_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             ngx.say(socket._VERSION)
         }
     }
@@ -36,7 +36,7 @@ GET /t
 --- config
     location /t {
         content_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             ngx.say(type(socket.luasocket_mt))
         }
     }
@@ -57,7 +57,7 @@ table
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             socket.tcp()
         }
     }
@@ -79,7 +79,7 @@ qr/\[warn\].*?no support for cosockets in this context, falling back to LuaSocke
 
     location /t {
         content_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             local sock = socket.tcp()
 
             local ok, err = sock:connect('127.0.0.1', $TEST_NGINX_SERVER_PORT)
@@ -121,7 +121,7 @@ HTTP/1.1 201 Created
         return 200;
 
         log_by_lua_block {
-            local socket = require 'resty.socket'
+            local socket = require 'resty.luasocket'
             local sock = socket.tcp()
 
             local ok, err = sock:connect('www.google.com', 80)
