@@ -1,4 +1,4 @@
-# lua-resty-socket
+# lua-resty-luasocket
 
 ![Module Version][badge-version-image]
 [![Build Status][badge-travis-image]][badge-travis-url]
@@ -155,7 +155,7 @@ modify the list of contexts allowing fallback.
 It can also be installed via LuaRocks:
 
 ```shell
-$ luarocks install lua-resty-socket
+$ luarocks install lua-resty-luasocket
 ```
 
 [Back to TOC](#table-of-contents)
@@ -167,8 +167,3 @@ Work licensed under the MIT License.
 [Back to TOC](#table-of-contents)
 
 [ngx_lua]: https://github.com/openresty/lua-nginx-module
-
-[badge-travis-url]: https://travis-ci.org/thibaultcha/lua-resty-socket
-[badge-travis-image]: https://travis-ci.org/thibaultcha/lua-resty-socket.svg?branch=master
-
-[badge-version-image]: https://img.shields.io/badge/version-1.0.0-blue.svg?style=flat
