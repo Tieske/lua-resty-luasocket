@@ -18,7 +18,12 @@
 - test the newly created rock:<br/>
   `luarocks install lua-resty-luasocket`
 
-### Version X.Y.Z, unreleased
+
+### Version 1.0.1, released 14-feb-2023
+
+- fix: copy paste error in `resty.luasocket.http` module would prevent it from loading
+
+### Version 1.0.0, released 14-feb-2023
 
 - added: `resty.luasocket.http` module that will use the compatibility sockets
 - fix: added compatibility function `sock:settimeouts`

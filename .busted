@@ -1,5 +1,7 @@
 return {
   default = {
+    lua = "spec/resty-runner.lua",
+    lpath = "./lib/?.lua;./lib/?/?.lua;./lib/?/init.lua",
     verbose = true,
     coverage = false,
     output = "gtest",

@@ -23,7 +23,7 @@ local http do
   -- store old values
   local old_tcp = ngx.socket.tcp
   local old_http_client = package.loaded["resty.http"]
-  local socket = require "resty.aws.request.http.socket"
+  local socket = require "resty.luasocket"
 
   -- patch/remove existing stuff
   package.loaded["resty.http"] = nil
