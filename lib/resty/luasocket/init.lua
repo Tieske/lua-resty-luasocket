@@ -6,14 +6,43 @@
 -- @license MIT, see `LICENSE.md`.
 
 local type = type
-local luasec_defaults = {
-  _fields = { "protocol", "key", "cert", "cafile", "options" }, -- meta-field to list settable fields
-  protocol = "any",
-  key = nil,
-  cert = nil,
-  cafile = nil,
-  options = { "all", "no_sslv2", "no_sslv3", "no_tlsv1" },
-}
+
+local luasec_defaults do
+  local CA_FILES = {
+    "/etc/ssl/certs/ca-certificates.crt",                 -- Debian/Ubuntu/Gentoo
+    "/etc/pki/tls/certs/ca-bundle.crt",                   -- Fedora/RHEL 6
+    "/etc/ssl/ca-bundle.pem",                             -- OpenSUSE
+    "/etc/pki/tls/cacert.pem",                            -- OpenELEC
+    "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem",  -- CentOS/RHEL 7
+    "/etc/ssl/cert.pem",                                  -- OpenBSD, Alpine
+  }
+
+  -- try and find a CA file that exists from the above list
+  local cafile
+  for _, filename in pairs(CA_FILES) do
+    local f = io.open(filename, "r")
+    if f then
+      f:close()
+      cafile = filename
+      break
+    end
+  end
+
+  if cafile then
+    ngx.log(ngx.DEBUG, "[lua-resty-luasocket] set CAfile-default to: '", cafile, "'")
+  else
+    ngx.log(ngx.WARN, "[lua-resty-luasocket] could not set a CAfile-default, none of the known files was found")
+  end
+
+  luasec_defaults = {
+    _fields = { "protocol", "key", "cert", "cafile", "options" }, -- meta-field to list settable fields
+    protocol = "any",
+    key = nil,
+    cert = nil,
+    cafile = cafile,
+    options = { "all", "no_sslv2", "no_sslv3", "no_tlsv1" },
+  }
+end
 
 --==========================
 -- LuaSocket proxy metatable

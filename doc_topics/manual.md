@@ -58,6 +58,10 @@ Lua compatibility.
 
 ## Important notes
 
+* The library will try and find CA-certficates in common locations. If custom certs are
+  to be used that are not in the store, or if you set the OpenResty configuration
+  directive [`lua_sll_trusted_certificate`](https://github.com/openresty/lua-nginx-module#lua_ssl_trusted_certificate)
+  then you'll have to manually set the `cafile` options using `resty.luasocket.set_luasec_defaults`.
 * LuaSocket sockets do not allow fo re-use. So always create a new socket.
 * The previous comment also applies to the `http` module. Do not reuse http clients.
 * Configuring the LuaSec module to be configured the same as `ngx_lua` is up to the
