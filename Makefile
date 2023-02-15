@@ -1,4 +1,4 @@
-.PHONY: test lint
+.PHONY: test lint docs
 
 test:
 	@busted -v -o gtest spec

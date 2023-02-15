@@ -18,10 +18,11 @@
 - test the newly created rock:<br/>
   `luarocks install lua-resty-luasocket`
 
-### Unreleased
+### Version 1.1.0, released 15-feb-2023
 
- - added: try and find a default CAfile by checking a number of standard file locations
-   (for different distros)
+- added: try and find a default CAfile by checking a number of standard file locations
+  (for different distros)
+- fix: makefile target docs to be phony
 
 ### Version 1.0.1, released 14-feb-2023
 
