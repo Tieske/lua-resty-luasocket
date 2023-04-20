@@ -42,4 +42,6 @@
 
 ### unreleased
 
+- fix: set sni when using ssl verify
+
 - forked from https://github.com/thibaultcha/lua-resty-socket
