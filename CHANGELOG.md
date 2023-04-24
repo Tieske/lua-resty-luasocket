@@ -42,4 +42,6 @@
 
 ### unreleased
 
+- fix: set sni when a server-name is provided
+
 - forked from https://github.com/thibaultcha/lua-resty-socket
