@@ -139,7 +139,7 @@ do
         return return_bool and false or nil, err
       end
 
-      if verify then
+      if server_name then
         sock:sni(server_name)
       end
 
