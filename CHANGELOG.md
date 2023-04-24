@@ -4,7 +4,7 @@
 
 - create a release branch
 - update the changelog below
-- update version and copyright-years in `./LICENSE.md` and `./lib/resty/luasocket/init.lua` (in doc-comments
+- update `_VERSION` and copyright-years in `./LICENSE.md` and `./lib/resty/luasocket/init.lua` (in doc-comments
   header, and in module constants)
 - create a new rockspec and update the version inside the new rockspec:<br/>
   `cp lua-resty-luasocket-dev-1.rockspec ./rockspecs/lua-resty-luasocket-X.Y.Z-1.rockspec`
@@ -17,6 +17,11 @@
   `luarocks upload ./rockspecs/lua-resty-luasocket-X.Y.Z-1.rockspec --api-key=ABCDEFGH`
 - test the newly created rock:<br/>
   `luarocks install lua-resty-luasocket`
+
+### Version 1.1.1, released 24-apr-2023
+
+- fix: set sni when a server-name is provided
+  [#3](https://github.com/Tieske/lua-resty-luasocket/pull/3)
 
 ### Version 1.1.0, released 15-feb-2023
 
@@ -40,8 +45,6 @@
 - fix: allow reuse of sockets. Luasocket doesn't allow reusing the same socket after it was closed.
   This doesn't play nice with resty-http which allows this.
 
-### unreleased
-
-- fix: set sni when a server-name is provided
+### Origin
 
 - forked from https://github.com/thibaultcha/lua-resty-socket
