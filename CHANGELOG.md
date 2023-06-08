@@ -18,10 +18,15 @@
 - test the newly created rock:<br/>
   `luarocks install lua-resty-luasocket`
 
+### Version x.x.x, unreleased
+
+- chore: updated some documentation to clarify
+  [#3](https://github.com/Tieske/lua-resty-luasocket/pull/3)
+
 ### Version 1.1.1, released 24-apr-2023
 
 - fix: set sni when a server-name is provided
-  [#3](https://github.com/Tieske/lua-resty-luasocket/pull/3)
+  [#5](https://github.com/Tieske/lua-resty-luasocket/pull/5)
 
 ### Version 1.1.0, released 15-feb-2023
 
