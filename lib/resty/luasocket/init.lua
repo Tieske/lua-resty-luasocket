@@ -276,6 +276,7 @@ do
   -- @tparam bool force set to `true` to force, or `false/nil` to auto-detect
   -- @return the previous value of this setting.
   -- @usage
+  -- local sock = require "resty.luasocket"
   -- local old_setting = sock.force_luasocket("timer", true)
   -- -- do something
   -- sock.force_luasocket("timer", old_setting)
@@ -293,6 +294,7 @@ do
   -- @tparam bool disable set to `true` to disable, or `false/nil` to enable
   -- @return the previous value of this setting.
   -- @usage
+  -- local sock = require "resty.luasocket"
   -- local old_setting = sock.disable_luasocket("init", true)
   -- -- do something
   -- sock.disable_luasocket("init", old_setting)
