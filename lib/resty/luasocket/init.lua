@@ -90,6 +90,14 @@ do
 
       return self.sock:send(data)
     end,
+    receive = function(self, pattern)
+      if pattern == 0 then
+        -- LuaSocket will block until data is available even if no data is being read.
+        -- see: https://github.com/lunarmodules/luasocket/issues/427
+        return ""
+      end
+      return self.sock:receive(pattern)
+    end,
     getreusedtimes = function() return 0 end,
     settimeout = function(self, t)
       if t then
