@@ -18,7 +18,7 @@
 - test the newly created rock:<br/>
   `luarocks install lua-resty-luasocket`
 
-### Version x.x.x, unreleased
+### Version 1.1.2, released 15-mar-2024
 
 - fix: implemented workaround for luasocket [issue #427](https://github.com/lunarmodules/luasocket/issues/427)
   which caused blocking while not reading

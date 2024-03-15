@@ -2,7 +2,7 @@
 -- Forked from [lua-resty-socket](https://github.com/thibaultcha/lua-resty-socket).
 --
 -- **NOTE**: see section [Important notes](../topics/manual.md.html#Important_notes) in the manual for limitations.
--- @copyright (c) 2016-2019 Thibault Charbonnier, 2021-2023 Thijs Schreijer
+-- @copyright (c) 2016-2019 Thibault Charbonnier, 2021-2024 Thijs Schreijer
 -- @license MIT, see `LICENSE.md`.
 
 local type = type
@@ -198,7 +198,7 @@ end
 
 local _M = {
   luasocket_mt = proxy_mt,
-  _VERSION = '1.1.1'
+  _VERSION = '1.1.2'
 }
 
 -- --------------------
