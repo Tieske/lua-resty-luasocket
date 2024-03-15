@@ -20,6 +20,9 @@
 
 ### Version x.x.x, unreleased
 
+- fix: implemented workaround for luasocket [issue #427](https://github.com/lunarmodules/luasocket/issues/427)
+  which caused blocking while not reading
+  [#6](https://github.com/Tieske/lua-resty-luasocket/pull/6)
 - chore: updated some documentation to clarify
   [#3](https://github.com/Tieske/lua-resty-luasocket/pull/3)
 
